@@ -19,4 +19,4 @@ const CoffeeSchema = new mongoose.Schema({
   },
 });
 
-export const Coffee = mongoose.model("Coffee", CoffeeSchema);
+export const Coffee = mongoose.model('Coffee', CoffeeSchema);

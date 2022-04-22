@@ -17,12 +17,10 @@ export const validObjectBody = (req, res, next) => {
     !objectBody.foto ||
     !objectBody.preco
   ) {
-    return res
-      .status(400)
-      .send({
-        message:
-          'Você não preencheu todos os dados para adicionar ou atualizar um café!',
-      });
+    return res.status(400).send({
+      message:
+        'Você não preencheu todos os dados para adicionar ou atualizar um café!',
+    });
   }
   next();
 };
