@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import {
   findAllCoffeesService,
   findByIdCoffeeService,
@@ -6,21 +7,31 @@ import {
   deleteCoffeeService
 } from '../services/coffee.service.js';
 
-export const findAllCoffeesController = (req, res) => {
-  const coffees = findAllCoffeesService();
+export const findAllCoffeesController = async (req, res) => {
+  const coffees = await findAllCoffeesService();
   res.send(coffees);
 };
 
-export const findByIdCoffeeController = (req, res) => {
-  const paramId = Number(req.params.id);
-  if (!paramId) {
-    return res.status(404).send({ message: "Café não encontrado" })
+export const findByIdCoffeeController = async (req, res) => {
+  const paramId = req.params.id;
+  if (!mongoose.Types.ObjectId.isValid(paramId)) {
+    console.log(paramId) 
+    res
+     .status(404)
+     .send({ message: "ID não encontrado" });
+     return;
   }
-  const choosenCoffee = findByIdCoffeeService(paramId);
-  res.send(choosenCoffee);
+  const choosenCoffee = await findByIdCoffeeService(paramId);
+  if(!choosenCoffee) {
+    res
+    .status(404)
+    .send({message: 'Café não encontrado'})
+    return;
+  }
+    res.send(choosenCoffee);
 };
 
-export const createCoffeeController = (req, res) => {
+export const createCoffeeController = async (req, res) => {
   const coffee = req.body;
   if (
     !coffee ||
@@ -33,14 +44,14 @@ export const createCoffeeController = (req, res) => {
       {message: 'Você não preencheu todos os dados para adicionar um novo café ao cardápio!'},
     );
   }
-  const newCoffee = createCoffeeService(coffee);
+  const newCoffee = await createCoffeeService(coffee);
   res.send(newCoffee);
 };
 
-export const updateCoffeeController = (req, res) => {
-  const idParam = Number(req.params.id);
+export const updateCoffeeController = async (req, res) => {
+  const idParam = req.params.id;
   const coffeeEdit = req.body;
-  if (!idParam) {
+  if (!mongoose.Types.ObjectId.isValid(idParam)) {
     return res.status(404).send({ message: "Café não encontrado" })
   }
 
@@ -51,15 +62,15 @@ export const updateCoffeeController = (req, res) => {
     !coffeeEdit.preco) {
     return res.status(400).send({ message: "Você não preencheu todos os dados para editar o café!" });
   }
-  const updateCoffee = updateCoffeeService(idParam, coffeeEdit);
+  const updateCoffee = await updateCoffeeService(idParam, coffeeEdit);
   res.send(updateCoffee);
 };
 
-export const deleteCoffeeController = (req, res) => {
-  const idParam = Number(req.params.id);
-  if (!idParam) {
+export const deleteCoffeeController = async (req, res) => {
+  const idParam = req.params.id;
+  if (!mongoose.Types.ObjectId.isValid(idParam)) {
     return res.status(404).send({ message: "Café não encontrado" })
   }
-  deleteCoffeeService(idParam);
+  await deleteCoffeeService(idParam);
   res.send({message: 'Café excluido com sucesso'});
 };
