@@ -1,25 +1,25 @@
 import { Coffee } from '../models/Coffee.js';
 
 export const findAllCoffeesService = async () => {
-  const coffees = await Coffee.find();
-  return coffees;
+  const allCoffees = await Coffee.find();
+  return allCoffees;
 };
 
 export const findByIdCoffeeService = async (paramId) => {
-  const coffee = await Coffee.findById(paramId);
-  return coffee;
+  const oneCoffee = await Coffee.findById(paramId);
+  return oneCoffee;
 };
 
 export const createCoffeeService = async (newCoffee) => {
-  const coffeeCriado = await Coffee.create(newCoffee);
-  return coffeeCriado;
+  const createdCoffee = await Coffee.create(newCoffee);
+  return createdCoffee;
 };
 
-export const updateCoffeeService = async (id, edit) => {
-  const coffeeAtt = await Coffee.findByIdAndUpdate(id, edit);
-  return coffeeAtt;
+export const updateCoffeeService = async (paramId, editedCoffee) => {
+  const updateCoffee = await Coffee.findByIdAndUpdate(paramId, editedCoffee);
+  return updateCoffee;
 };
 
-export const deleteCoffeeService = async (id) => {
-  return Coffee.findByIdAndDelete(id);
+export const deleteCoffeeService = async (paramId) => {
+  return Coffee.findByIdAndDelete(paramId);
 };
