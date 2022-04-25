@@ -10,6 +10,7 @@ Projeto feito juntamente com a Blue durante o módulo 3 de fullstack. Aplicaçã
 * MongoDB
 * Nodemon
 * NodeJS
+* Mongoose
 
 ## Personal
 Dev: João Vitor Carvalho Valgas.
