@@ -1,3 +1,5 @@
+import swaggerUi from 'swagger-ui-express';
+import {readFile} from "fs/promises";
 import express from 'express';
 import {
   findAllCoffeesController,
@@ -18,6 +20,11 @@ import {
 } from '../middlewares/coffee.middleware.js';
 
 export const routes = express.Router();
+
+const swaggerDocument = JSON.parse(await readFile('swagger.json', 'utf8'));
+// Rotas Swagger
+routes.use('/api-docs', swaggerUi.serve)
+routes.get('/api-docs', swaggerUi.setup(swaggerDocument))
 
 // Rotas API
 routes.get('/find-coffees', findAllCoffeesController);

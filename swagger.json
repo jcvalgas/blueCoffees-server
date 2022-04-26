@@ -1,0 +1,315 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Blue Coffees",
+    "description": "API para CRUD de cafés e carrinho de compras",
+    "termsOfService": "",
+    "contact": {
+      "email": "joaovitorcarvalhovalgas@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/coffees",
+      "description": "API de teste"
+    },
+    {
+      "url": "",
+      "description": "API de produção"
+    }
+  ],
+  "paths": {
+    "/find-coffees": {
+      "get": {
+        "summary": "Lista de todos os cafés",
+        "description": "Rota responsável por listar todos os cafés",
+        "tags": ["Coffees"],
+        "responses": {
+          "404": {
+            "description": "Not Found"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Coffees"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/find-coffees/{id}": {
+      "get": {
+        "summary": "Busca um café pelo ID",
+        "description": "Rota responsável por buscar um café pelo ID",
+        "tags": ["Coffees"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do café para a busca",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Coffees"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/create": {
+      "post": {
+        "summary": "Cadastrar um café",
+        "description": "Rota responsável por cadastrar um café",
+        "tags": ["Coffees"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Coffees"
+              },
+              "examples": {
+                "Coffees": {
+                  "value": {
+                    "sabor": "Citzen Express",
+                    "descricao": "tempor incididunt ut labore et dolore magna aliqua.",
+                    "foto": "../assets/img/coffee-images/mug-coffee_ccexpress.png",
+                    "preco": 5
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Coffees"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/update/{id}": {
+      "put": {
+        "summary": "Editar um café pelo ID",
+        "description": "Rota responsável por editar um café pelo ID",
+        "tags": ["Coffees"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do café para a busca",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Coffees"
+              },
+              "examples": {
+                "Coffees": {
+                  "value": {
+                    "sabor": "Citzen Express Editado",
+                    "descricao": "tempor incididunt ut labore et dolores testing magna aliqua.",
+                    "foto": "../assets/img/coffee-images/mug-coffee_ccexpress.png",
+                    "preco": 7
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Coffees"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/delete/{id}": {
+      "delete": {
+        "summary": "Apagar um café pelo ID",
+        "description": "Rota responsável por apagar um café pelo ID",
+        "tags": ["Coffees"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do café para deleção",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/all-carrinho": {
+      "get": {
+        "summary": "Lista de todos os itens do carrinho",
+        "description": "Rota responsável por listar todos os itens do carrinho",
+        "tags": ["Carrinho"],
+        "responses": {
+          "404": {
+            "description": "Not Found"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Carrinho"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/create-carrinho": {
+      "post": {
+        "summary": "Cadastrar vários itens no carrinho",
+        "description": "Rota responsável por cadastrar vários itens no carrinho",
+        "tags": ["Carrinho"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Carrinho"
+              },
+              "examples": {
+                "Carrinho": {
+                  "value": [
+                    {
+                      "paletaId": "624230fdcd38269205c82197",
+                      "quantidade": 5
+                    },
+                    {
+                      "paletaId": "62423c1e618f4a4738a5ee75",
+                      "quantidade": 2
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Carrinho"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finish-carrinho": {
+      "delete": {
+        "summary": "Apagar todos os itens do carrinho",
+        "description": "Rota responsável por apagar todos os itens do carrinho",
+        "tags": ["Carrinho"],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Coffees": {
+        "type": "object",
+        "properties": {
+          "sabor": {
+            "type": "string"
+          },
+          "descricao": {
+            "type": "string"
+          },
+          "foto": {
+            "type": "string"
+          },
+          "preco": {
+            "type": "number"
+          }
+        }
+      },
+      "Carrinho": {
+        "type": "object",
+        "properties": {
+          "coffeeId": {
+            "type": "string"
+          },
+          "quantidade": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}
