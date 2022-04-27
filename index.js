@@ -15,5 +15,5 @@ app.use('/coffees', routes)
 
 
 app.listen(port, () => {
-    console.log(`Rodando em http://localhost:${port}`);
+    console.log(`Rodando na porta: ${port}`);
 })
